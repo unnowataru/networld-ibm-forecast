@@ -1,0 +1,46 @@
+repository:
+  name: networld-ibm-forecast
+  category: project_repo
+  inherits_from: work-env
+
+sources:
+  common_policy_repo: C:\dev\work-env
+
+agents:
+  codex:
+    role: implementation_orchestrator
+  claude:
+    role: design_reviewer_sidecar
+  xai:
+    role: research_sidecar
+
+shared_skills:
+  - name: x-search
+    source_repo: work-env
+    source_path: skills/x-search
+    use_cases:
+      - blog_source_collection
+      - slide_source_collection
+      - market_signal_scan
+
+project:
+  summary: Forecast API service backed by FastAPI, Python business logic, and Docker packaging.
+  stack:
+    - python
+    - fastapi
+    - uvicorn
+    - docker
+  primary_commands:
+    bootstrap:
+      - python -m venv .venv
+      - .\.venv\Scripts\Activate.ps1
+      - pip install -r requirements.txt
+    test:
+      - python -m compileall .
+    run:
+      - uvicorn main:app --host 0.0.0.0 --port 8080
+
+governance:
+  common_policy_source: work-env
+  secrets_source: 1password_cli
+  deliverable_sot: onedrive_for_business
